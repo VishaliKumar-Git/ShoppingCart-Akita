@@ -1,0 +1,1 @@
+export const productUrl = '5eda4003330000740079ea60';

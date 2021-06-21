@@ -1,0 +1,64 @@
+<h2 mat-dialog-title>Items Added in the Cart</h2>
+<form [formGroup]="cartForm">
+    <div mat-dialog-content>
+        <div class="modalWrapper header">
+            <div>
+                <p>S.No</p>
+                <!-- <p>{{ item.description }}</p> -->
+            </div>
+            <div>
+                <p>Item Name</p>
+                <!-- <p>{{ item.description }}</p> -->
+            </div>
+            <div>
+                <p>Price</p>
+            </div>
+            <div>
+                <p>Quantity</p>
+            </div>
+            <div>
+                <p>Total</p>
+            </div>
+        </div>
+        <div formArrayName="items"
+            *ngFor="let item of cartForm.get('items')['controls']; let i = index;">
+            <div [formGroupName]="i" class="modalWrapper">
+                <div>
+                    <p>{{ i + 1 }}</p>
+                </div>
+                <div>
+                    <p>{{ cartForm.controls.items.controls[i].controls.name.value }}</p>
+                </div>
+                <div>
+                    <p>{{ cartForm.controls.items.controls[i].controls.price.value | currency }}</p>
+                </div>
+                <div>
+                    <input formControlName="quantity" type="number"
+                    class="inputWidth" />
+                </div>
+                <div>
+                    <p>{{ (cartForm.controls.items.controls[i].controls.price.value * 
+                        cartForm.controls.items.controls[i].controls.quantity.value) | currency}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="modalWrapper header primaryFont">
+            <div>
+            </div>
+            <div>
+            </div>
+            <div>
+            </div>
+            <div>
+                <p>Total</p>
+            </div>
+            <div>
+                <p>{{ getTotal() | currency }}</p>
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions style="float: right;padding-right: 2em;">
+        <button mat-stroked-button color="primary" (click)="close()">Close</button>
+        <button mat-raised-button cdkFocusInitial color="primary" (click)="proceedToPay()">Pay Now</button>
+    </div>
+</form>
